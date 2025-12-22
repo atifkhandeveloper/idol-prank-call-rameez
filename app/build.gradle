@@ -67,7 +67,7 @@ dependencies {
     //slider
 //    implementation 'com.github.alirezat775:carousel-view:1.1.1'
 
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+//    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
 
 //    implementation 'com.ebanx:swipe-button:0.4.0'
     implementation "com.ncorti:slidetoact:0.9.0"

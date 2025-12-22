@@ -36,7 +36,7 @@ public class CharSelection extends AppCompatActivity {
             public void onClick(View v) {
                 str = "selected";
                 Constant.character_no = 1;
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.new_1);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.one);
                 Log.d("cauliflower", " Image Selected = " + Constant.character_no);
                 Constant.CHAR_BITMAP = bitmap;
                 Intent intent = new Intent(getApplicationContext(), CombineMakeCallActivity.class);
@@ -51,7 +51,7 @@ public class CharSelection extends AppCompatActivity {
             public void onClick(View v) {
                 str = "selected";
                 Constant.character_no = 2;
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.new_2);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.two);
                 Log.d("cauliflower", " Image Selected = " + Constant.character_no);
                 Constant.CHAR_BITMAP = bitmap;
                 Intent intent = new Intent(getApplicationContext(), CombineMakeCallActivity.class);
@@ -66,7 +66,7 @@ public class CharSelection extends AppCompatActivity {
             public void onClick(View v) {
                 str = "selected";
                 Constant.character_no = 3;
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.new_3);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.three);
                 Log.d("cauliflower", " Image Selected = " + Constant.character_no);
                 Constant.CHAR_BITMAP = bitmap;
                 Intent intent = new Intent(getApplicationContext(), CombineMakeCallActivity.class);
@@ -80,7 +80,7 @@ public class CharSelection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Constant.character_no = 4;
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.new_4);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.four);
                 Log.d("cauliflower", " Image Selected = " + Constant.character_no);
                 Constant.CHAR_BITMAP = bitmap;
                 Intent intent = new Intent(getApplicationContext(), CombineMakeCallActivity.class);
@@ -94,7 +94,7 @@ public class CharSelection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Constant.character_no = 5;
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.new_5);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.five);
                 Log.d("cauliflower", " Image Selected = " + Constant.character_no);
                 Constant.CHAR_BITMAP = bitmap;
                 Intent intent = new Intent(getApplicationContext(), CombineMakeCallActivity.class);
@@ -108,7 +108,7 @@ public class CharSelection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Constant.character_no = 6;
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.new_6);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.six);
                 Log.d("cauliflower", " Image Selected = " + Constant.character_no);
                 Constant.CHAR_BITMAP = bitmap;
                 Intent intent = new Intent(getApplicationContext(), CombineMakeCallActivity.class);

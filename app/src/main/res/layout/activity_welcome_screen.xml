@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/white"
     tools:context=".activities.AppWelcome">
 
     <ScrollView
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#000000">
+        android:background="@color/white">
 
         <ImageView
             android:layout_gravity="center"
@@ -30,7 +30,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_6sdp"
-            android:src="@drawable/welcome_image_new">
+            android:src="@drawable/logo">
 
         </ImageView>
         <TextView
@@ -70,7 +70,7 @@
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 app:layout_constraintTop_toTopOf="@id/cl"
                 app:layout_constraintBottom_toBottomOf="@id/cl"
                 app:layout_constraintStart_toStartOf="@id/cl"

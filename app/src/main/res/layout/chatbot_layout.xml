@@ -2,7 +2,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
+        android:background="@color/white"
         android:orientation="vertical">
 
     <RelativeLayout
@@ -27,9 +27,9 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/mrsmonsterrotate2"
                     android:gravity="center"
-                    android:text="Chat Wednesday Addams"
+                    android:text="Chat Bot"
                     android:textAlignment="center"
-                    android:textColor="#FF8600"
+                    android:textColor="@color/pink"
                     android:textSize="19sp"
                     />
 

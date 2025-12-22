@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Privacy policy"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="301dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="@string/fragment1"
                 android:textSize="15dp" />
         </ScrollView>
@@ -69,7 +69,7 @@
             android:gravity="center"
             android:text="Continue"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             android:visibility="gone"

@@ -13,6 +13,7 @@
         android:layout_height="28dp"
         android:layout_margin="16dp"
         android:src="@drawable/new_settings"
+        android:tint="@color/pink"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

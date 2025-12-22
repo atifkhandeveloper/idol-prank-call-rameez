@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/white"
     tools:context=".activities.SelectCall">
 
 
@@ -43,7 +43,7 @@
                     android:gravity="center"
                     android:text="Voice  Call"
                     android:textAlignment="center"
-                    android:textColor="#FF8600"
+                    android:textColor="@color/pink"
                     android:textSize="@dimen/_25ssp"
                     android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                         android:layout_width="@dimen/_250sdp"
                         android:layout_height="@dimen/_55sdp"
                         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-                        app:cardBackgroundColor="#191919"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                                 android:padding="@dimen/_5sdp"
                                 android:text="Template"
                                 android:textAlignment="center"
-                                android:textColor="#FF8600"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/_11ssp" />
 
                             <LinearLayout
@@ -140,7 +140,7 @@
                         app:cardCornerRadius="0dp"
                         android:layout_marginTop="@dimen/_16sdp"
                         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-                        app:cardBackgroundColor="#191919"
+                        app:cardBackgroundColor="@color/pink"
                         app:layout_constraintEnd_toEndOf="@+id/cardView2"
                         app:layout_constraintStart_toStartOf="@+id/cardView2"
                         app:layout_constraintTop_toBottomOf="@+id/cardView2"
@@ -158,7 +158,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:text="Timer"
                                 android:textAlignment="center"
-                                android:textColor="#FF8600"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/_11sdp" />
 
 
@@ -260,7 +260,7 @@
                         android:layout_width="283dp"
                         android:layout_height="@dimen/_55sdp"
                         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-                        app:cardBackgroundColor="#191919"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="0dp"
                         android:layout_marginTop="@dimen/_16sdp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -282,7 +282,7 @@
                                 android:layout_weight="0.5"
                                 android:padding="@dimen/_10sdp"
                                 android:src="@drawable/new_voice_call"
-                                app:tint="#FF8600" />
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/selected_call_text"

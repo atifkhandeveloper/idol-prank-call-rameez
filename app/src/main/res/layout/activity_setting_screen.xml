@@ -2,7 +2,7 @@
 <ScrollView
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,7 +10,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000"
+        android:background="@color/white"
         android:orientation="vertical"
         android:padding="@dimen/_12sdp"
         tools:context=".activities.SettingOption">
@@ -38,9 +38,9 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/mrsmonsterrotate2"
                     android:gravity="center"
-                    android:text="Setting"
+                    android:text="Settings"
                     android:textAlignment="center"
-                    android:textColor="#FF8600"
+                    android:textColor="@color/pink"
                     android:textSize="19sp" />
 
             </RelativeLayout>
@@ -69,7 +69,8 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/home_iconn">
+                        android:src="@drawable/home_iconn"
+                        android:tint="@color/pink">
 
                     </ImageView>
 
@@ -79,7 +80,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_36sdp"
                         android:text="Home"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="22sp">
 
                     </TextView>
@@ -98,7 +99,8 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/rate_uss">
+                        android:src="@drawable/rate_uss"
+                        android:tint="@color/pink">
 
                     </ImageView>
 
@@ -108,7 +110,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_36sdp"
                         android:text="Rate us(AD)"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="22sp">
 
                     </TextView>
@@ -127,7 +129,8 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/sharee">
+                        android:src="@drawable/sharee"
+                        android:tint="@color/pink">
 
                     </ImageView>
 
@@ -137,7 +140,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_36sdp"
                         android:text="Share"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="22sp">
 
                     </TextView>
@@ -156,7 +159,8 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/privacy_policyy">
+                        android:src="@drawable/privacy_policyy"
+                        android:tint="@color/pink">
 
                     </ImageView>
 
@@ -166,7 +170,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_36sdp"
                         android:text="Privacy Policy"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="22sp">
 
                     </TextView>
@@ -185,7 +189,8 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/more_appss">
+                        android:src="@drawable/more_appss"
+                        android:tint="@color/pink">
 
                     </ImageView>
 
@@ -195,7 +200,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_36sdp"
                         android:text="More Apps (AD)"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="22sp">
 
                     </TextView>

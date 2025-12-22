@@ -61,7 +61,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Home.this, SelectCall.class));
+                startActivity(new Intent(Home.this, CharSelection.class));
             }
         });
         chat.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    startActivity(new Intent(Home.this, SelectVideoCall.class));
+                    startActivity(new Intent(Home.this, CharSelection.class));
                 }
         });
         settings.setOnClickListener(new View.OnClickListener() {
