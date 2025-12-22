@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:orientation="vertical">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                >
+
+                <Button
+                    android:id="@+id/back_button"
+                    android:layout_width="17dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@drawable/back_button_image" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/mrsmonsterrotate2"
+                    android:gravity="center"
+                    android:text="Chat Wednesday Addams"
+                    android:textAlignment="center"
+                    android:textColor="#FF8600"
+                    android:textSize="19sp"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/chat_history_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/chat_history_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+
+    </ScrollView>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_33sdp"
+            android:background="#1C1C1C"
+           >
+
+            <EditText
+                android:id="@+id/question_text_input_edit_text"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_marginLeft="@dimen/_33sdp"
+               android:background="#1C1C1C"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="#FFFFFF"
+                android:layout_height="70dp"
+                android:hint="Type here"
+                android:textColorHint="#FFFFFF"/>
+
+            <Button
+                android:id="@+id/submit_question_button"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/send_chat"
+               android:layout_marginLeft="@dimen/_80sdp"
+
+               />
+        </LinearLayout>
+
+    </LinearLayout>
