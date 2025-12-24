@@ -25,6 +25,7 @@
             android:drawableTint="@color/pink"
             android:drawableTintMode="@color/pink"
             android:background="@drawable/back_button_image"
+            android:backgroundTint="@color/pink"
             android:layout_height="25dp" />
 
 
@@ -64,7 +65,7 @@
                     android:id="@+id/char1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintWidth_percent="0.40"
                     android:src="@drawable/one"
                     android:scaleType="fitXY"
                     android:adjustViewBounds="true"
@@ -75,7 +76,7 @@
                     android:id="@+id/char2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintWidth_percent="0.40"
                     android:src="@drawable/two"
                     android:scaleType="fitXY"
                     android:adjustViewBounds="true"
@@ -96,7 +97,7 @@
                     android:id="@+id/char3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintWidth_percent="0.40"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/three"
                     android:scaleType="fitXY"
@@ -108,7 +109,7 @@
                     android:id="@+id/char4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintWidth_percent="0.40"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/four"
                     android:scaleType="fitXY"
@@ -130,7 +131,7 @@
                     android:id="@+id/char5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintWidth_percent="0.40"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/five"
                     android:scaleType="fitXY"
@@ -142,7 +143,7 @@
                     android:id="@+id/char6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintWidth_percent="0.40"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/six"
                     android:scaleType="fitXY"
@@ -150,12 +151,13 @@
                     app:layout_constraintTop_toBottomOf="@id/native_ad_frame_Char2"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <FrameLayout
-                    android:id="@+id/native_ad_frame_Char3"
+                <com.google.android.ads.nativetemplates.TemplateView
+                    android:id="@+id/my_template"
+                    app:gnt_template_type="@layout/gnt_medium_template_view_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_10sdp"
                     app:layout_constraintTop_toBottomOf="@id/char5"
                     app:layout_constraintStart_toStartOf="@id/char5"
                     app:layout_constraintEnd_toEndOf="@id/char6"/>

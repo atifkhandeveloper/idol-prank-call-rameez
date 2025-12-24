@@ -1,6 +1,9 @@
 package com.idol.prank.call.chat.video.activities;
 
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,10 +21,17 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.idol.prank.call.chat.video.R;
 
 import com.idol.prank.call.chat.video.activities.fragments.LiveChat;
@@ -30,8 +40,9 @@ import com.idol.prank.call.chat.video.utils.Constant;
 
 public class Home extends AppCompatActivity {
     Boolean checked = false;
-    RelativeLayout voice_call_button, video_call_button, characterSelect, menu, chat;
+    RelativeLayout voice_call_button, video_call_button, characterSelect, menu, chat ;
     ImageView settings;
+    FrameLayout templateview;
     public static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 5469;
     private static final int MY_REQUEST_CODE = 17326;
     String str = null;
@@ -48,11 +59,14 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         takePermission();
+        loadnativead();
 
         chat = findViewById(R.id.btn_message);
         voice_call_button = findViewById(R.id.btn_audio_call);
         video_call_button = findViewById(R.id.btn_video_call);
         settings = findViewById(R.id.iv_settings);
+        templateview = findViewById(R.id.native_ad_frame_Main);
+        templateview.setVisibility(GONE);
 //        menu = findViewById(R.id.set);
 //        characterSelect = findViewById(R.id.characterSelect);
 
@@ -163,7 +177,7 @@ public class Home extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        findViewById(R.id.native_ad_frame_Main).setVisibility(View.VISIBLE);
+                        findViewById(R.id.native_ad_frame_Main).setVisibility(VISIBLE);
                         if (!isFinishing()) {
                             progress.dismiss();
                         }
@@ -194,6 +208,25 @@ public class Home extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    public void loadnativead() {
+        MobileAds.initialize(this);
+        AdLoader adLoader = new AdLoader.Builder(this, getResources().getString(R.string.nativead))
+                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
+                    @Override
+                    public void onNativeAdLoaded(NativeAd nativeAd) {
+                        NativeTemplateStyle styles = new
+                                NativeTemplateStyle.Builder().build();
+                        TemplateView template = findViewById(R.id.my_template);
+                        templateview.setVisibility(VISIBLE);
+                        template.setStyles(styles);
+                        template.setNativeAd(nativeAd);
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
 }

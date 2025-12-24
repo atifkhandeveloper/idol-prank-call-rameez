@@ -33,6 +33,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:backgroundTint="#FF8600"
+
                     android:background="@drawable/back_button_image" />
 
                 <TextView

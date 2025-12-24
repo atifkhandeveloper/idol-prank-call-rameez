@@ -10,6 +10,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.nativead.NativeAd
 import com.idol.prank.call.chat.video.R
 import com.idol.prank.call.chat.video.adapter.ImagePagerAdapter
 
@@ -24,12 +30,12 @@ class HowToUseActivity : AppCompatActivity()
     private var retryAttempt = 0
     private val nativeAdContainerView: ViewGroup? = null
     private var nativeAdContainerr: FrameLayout? = null
+    lateinit var templateview: View
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_how_to_use)
-        nativeAdContainerr = findViewById(R.id.nativeAdContainerr)
         viewPager = findViewById(R.id.viewPagerhowtouse)
 
         nextbtn = findViewById(R.id.btnnext)
@@ -37,9 +43,13 @@ class HowToUseActivity : AppCompatActivity()
         pagerAdapter = ImagePagerAdapter(this)
         viewPager.adapter = pagerAdapter
 
+        templateview = findViewById(R.id.relativeLayoutadmob)
+        templateview.visibility = View.GONE
+
 
 
         showProgressDialog()
+        loadnative()
 
 
 
@@ -119,6 +129,30 @@ class HowToUseActivity : AppCompatActivity()
             progressDialog.dismiss()
         }, 2000)
     }
+
+    private fun loadnative(){
+        MobileAds.initialize(this)
+
+// Create the ad loader
+        val adLoader = AdLoader.Builder(this, resources.getString(R.string.nativead))
+            .forNativeAd { nativeAd: NativeAd ->
+                // Create template style
+                val styles = NativeTemplateStyle.Builder()
+                    .build()
+                templateview.visibility = View.VISIBLE
+                // Set template and native ad
+                val template: TemplateView = findViewById(R.id.my_template)
+                template.setStyles(styles)
+                template.setNativeAd(nativeAd)
+
+            }
+            .build()
+
+// Load the ad
+        adLoader.loadAd(AdRequest.Builder().build())
+    }
+
+
 
 
 }

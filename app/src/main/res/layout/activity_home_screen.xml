@@ -175,19 +175,18 @@
     <FrameLayout
         android:id="@+id/native_ad_frame_Main"
         android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="#FF6B6B"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="AD"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+
+        <com.google.android.ads.nativetemplates.TemplateView
+            android:id="@+id/my_template"
+            app:gnt_template_type="@layout/gnt_medium_template_view_new"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

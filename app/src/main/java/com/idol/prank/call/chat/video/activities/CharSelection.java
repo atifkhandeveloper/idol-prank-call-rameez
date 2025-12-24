@@ -1,5 +1,8 @@
 package com.idol.prank.call.chat.video.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,9 +14,16 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.idol.prank.call.chat.video.R;
 
 import com.idol.prank.call.chat.video.utils.Constant;
@@ -24,12 +34,18 @@ public class CharSelection extends AppCompatActivity {
     private int retry = 0;
 
     private Button back, next;
+    TemplateView template;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_select);
+
+        template = findViewById(R.id.my_template);
+        template.setVisibility(GONE);
+        loadnativead();
 
         findViewById(R.id.char1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +159,7 @@ public class CharSelection extends AppCompatActivity {
                 public void run() {
                     findViewById(R.id.native_ad_frame_Char1).setVisibility(View.VISIBLE);
                     findViewById(R.id.native_ad_frame_Char2).setVisibility(View.VISIBLE);
-                    findViewById(R.id.native_ad_frame_Char3).setVisibility(View.VISIBLE);
+//                    findViewById(R.id.native_ad_frame_Char3).setVisibility(View.VISIBLE);
                     if (!isFinishing()) {
                         progress.dismiss();
                     }
@@ -160,6 +176,24 @@ public class CharSelection extends AppCompatActivity {
             startActivity(new Intent(CharSelection.this , Home.class));
 
 
+    }
+
+    public void loadnativead() {
+        MobileAds.initialize(this);
+        AdLoader adLoader = new AdLoader.Builder(this, getResources().getString(R.string.nativead))
+                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
+                    @Override
+                    public void onNativeAdLoaded(NativeAd nativeAd) {
+                        NativeTemplateStyle styles = new
+                                NativeTemplateStyle.Builder().build();
+                        template.setVisibility(VISIBLE);
+                        template.setStyles(styles);
+                        template.setNativeAd(nativeAd);
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
 }

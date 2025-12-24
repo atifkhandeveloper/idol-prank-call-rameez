@@ -1,5 +1,8 @@
 package com.idol.prank.call.chat.video.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -19,6 +22,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.receiver.ReceiveCalls;
 import com.idol.prank.call.chat.video.utils.Constant;
@@ -43,6 +52,7 @@ public class CombineMakeCallActivity extends AppCompatActivity {
     RadioButton audioradiobtn, videoradiobtn;
     private static final int ALARM_REQUEST_CODE = 134;
     ImageView backicon;
+    TemplateView template;
 
 
     @SuppressLint("MissingInflatedId")
@@ -69,6 +79,9 @@ public class CombineMakeCallActivity extends AppCompatActivity {
 
         findIdsWed();
         checkingCallTypeWed();
+        template = findViewById(R.id.my_template);
+        template.setVisibility(GONE);
+        loadnativead();
 
 
 
@@ -420,6 +433,24 @@ public class CombineMakeCallActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         }, 5000);
+    }
+
+    public void loadnativead() {
+        MobileAds.initialize(this);
+        AdLoader adLoader = new AdLoader.Builder(this, getResources().getString(R.string.nativead))
+                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
+                    @Override
+                    public void onNativeAdLoaded(NativeAd nativeAd) {
+                        NativeTemplateStyle styles = new
+                                NativeTemplateStyle.Builder().build();
+                        template.setVisibility(VISIBLE);
+                        template.setStyles(styles);
+                        template.setNativeAd(nativeAd);
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
 

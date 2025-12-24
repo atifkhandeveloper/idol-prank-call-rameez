@@ -74,4 +74,6 @@ Here we are showing facebook ads to use.\n
         and any resemblance to actual calls or callers is purely coincidental.
         The app does not provide any real calling functionality and is designed solely for amusement.</string>
 
+    <string name="nativead">ca-app-pub-3940256099942544/2247696110</string>
+
 </resources>

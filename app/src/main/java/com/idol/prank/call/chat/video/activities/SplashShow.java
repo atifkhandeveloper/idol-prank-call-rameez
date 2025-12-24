@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.ump.FormError;
 import com.idol.prank.call.chat.video.R;
 
 
@@ -32,6 +36,9 @@ ProgressBar progressBar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         progressBar = findViewById(R.id.progressBarsplash);
         sharedPref = new SharedPref(this);
         final Handler handler1 = new Handler(Looper.getMainLooper());

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.CombineMakeCallActivity">
 
 
@@ -30,6 +31,7 @@
             android:fontFamily="@font/mrsmonsterrotate2"
             android:text="Make A Call"
             android:textSize="30dp"
+            android:textColor="@color/pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -48,6 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.022"
+            android:backgroundTint="@color/pink"
             app:srcCompat="@drawable/back_button_image" />
 
         <androidx.cardview.widget.CardView
@@ -58,6 +61,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="70dp"
             app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -82,7 +86,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="10dp"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-            app:cardBackgroundColor="#191919"
+            app:cardBackgroundColor="@color/pink"
             app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,6 +143,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="70dp"
             app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/pink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2">
@@ -148,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Call Formate"
+                android:text="Call Format"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
@@ -158,8 +163,9 @@
             android:layout_width="@dimen/_250sdp"
             android:layout_height="@dimen/_40sdp"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-            app:cardBackgroundColor="#191919"
+            app:cardBackgroundColor="@color/pink"
             app:cardCornerRadius="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -217,6 +223,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="70dp"
             app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -239,8 +246,9 @@
             android:layout_width="@dimen/_250sdp"
             android:layout_height="@dimen/_40sdp"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-            app:cardBackgroundColor="#191919"
+            app:cardBackgroundColor="@color/pink"
             app:cardCornerRadius="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -326,6 +334,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="40dp"
+            android:backgroundTint="@color/pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -343,13 +352,13 @@
                 android:textSize="30dp" />
         </androidx.cardview.widget.CardView>
 
-        <FrameLayout
-            android:id="@+id/native_ad_frame_Main"
+
+        <com.google.android.ads.nativetemplates.TemplateView
+            android:id="@+id/my_template"
+            app:gnt_template_type="@layout/gnt_medium_template_view_new"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginEnd="12dp"
-            android:visibility="visible"
+            android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/startcallcard"

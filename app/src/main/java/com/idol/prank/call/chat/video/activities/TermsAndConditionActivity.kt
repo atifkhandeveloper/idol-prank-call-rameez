@@ -9,6 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.nativead.NativeAd
 import com.idol.prank.call.chat.video.R
 
 class TermsAndConditionActivity : AppCompatActivity() {
@@ -16,6 +22,8 @@ class TermsAndConditionActivity : AppCompatActivity() {
     private var checkBoxtermsandcon: CheckBox? = null
     private var textcontinue: TextView? = null
     private var checkad: Boolean? = null
+    lateinit var templateview: View
+
 
     private var handlerRetryAd: Handler? = null
     private var retryAttempt = 0
@@ -31,7 +39,12 @@ class TermsAndConditionActivity : AppCompatActivity() {
         checkBoxtermsandcon = findViewById(R.id.checkBox)
         textcontinue = findViewById(R.id.continuedata)
 
+
+        templateview = findViewById(R.id.relativeLayoutadmob)
+        templateview.visibility = View.GONE
+
         showProgressDialog()
+        loadnative()
 
         checkBoxtermsandcon!!.setOnCheckedChangeListener { _, isChecked ->
             textcontinue!!.visibility = if (isChecked) {
@@ -85,6 +98,29 @@ class TermsAndConditionActivity : AppCompatActivity() {
 
         finish()
     }
+
+    private fun loadnative(){
+        MobileAds.initialize(this)
+
+// Create the ad loader
+        val adLoader = AdLoader.Builder(this, resources.getString(R.string.nativead))
+            .forNativeAd { nativeAd: NativeAd ->
+                // Create template style
+                val styles = NativeTemplateStyle.Builder()
+                    .build()
+                templateview.visibility = View.VISIBLE
+                // Set template and native ad
+                val template: TemplateView = findViewById(R.id.my_template)
+                template.setStyles(styles)
+                template.setNativeAd(nativeAd)
+
+            }
+            .build()
+
+// Load the ad
+        adLoader.loadAd(AdRequest.Builder().build())
+    }
+
 
 
 

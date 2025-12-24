@@ -23,7 +23,7 @@
                 android:id="@+id/textView"
                 android:layout_width="120dp"
                 android:layout_height="25dp"
-
+                android:textColor="@color/pink"
                 android:fontFamily="@font/poppins_bold"
                 android:text="How To Use"
                 android:textSize="20dp"
@@ -37,6 +37,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPagerhowtouse"
                 android:layout_width="match_parent"
+                android:layout_height="450dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -61,6 +62,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:text="Next"
                     android:visibility="visible"
+                    android:background="@drawable/skip_button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.497"
@@ -76,6 +78,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:text="Continue"
                     android:visibility="gone"
+                    android:background="@drawable/skip_button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.497"
@@ -91,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linbtn">
 
@@ -99,18 +103,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <FrameLayout
-                    android:id="@+id/nativeAdContainerr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/progressBar">
-                </FrameLayout>
+                    <com.google.android.ads.nativetemplates.TemplateView
+                        android:id="@+id/my_template"
+                        app:gnt_template_type="@layout/gnt_medium_template_view_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/progressBar"/>
+
 
                 </LinearLayout>
 

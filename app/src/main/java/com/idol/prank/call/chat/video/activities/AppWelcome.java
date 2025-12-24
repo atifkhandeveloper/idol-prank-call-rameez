@@ -1,5 +1,8 @@
 package com.idol.prank.call.chat.video.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.idol.prank.call.chat.video.AdsModule.Constants;
 import com.idol.prank.call.chat.video.R;
 
@@ -27,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class AppWelcome extends AppCompatActivity {
     private final String TAG = AppWelcome.class.getSimpleName();
     private Boolean checked = false;
+    RelativeLayout templateview;
 
     private Handler handlerRetryAd;
 
@@ -37,10 +48,13 @@ public class AppWelcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
         showProgressDialog();
+        loadnativead();
+        templateview = findViewById(R.id.relativeLayoutadmob);
+        templateview.setVisibility(GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                findViewById(R.id.cl).setVisibility(View.VISIBLE);
+                findViewById(R.id.cl).setVisibility(VISIBLE);
             }
         }, 3000);
 
@@ -127,5 +141,27 @@ public class AppWelcome extends AppCompatActivity {
             }
         }, 5000);
     }
+
+
+    public void loadnativead() {
+        MobileAds.initialize(this);
+        AdLoader adLoader = new AdLoader.Builder(this, getResources().getString(R.string.nativead))
+                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
+                    @Override
+                    public void onNativeAdLoaded(NativeAd nativeAd) {
+                        NativeTemplateStyle styles = new
+                                NativeTemplateStyle.Builder().build();
+                        TemplateView template = findViewById(R.id.my_template);
+                        templateview.setVisibility(VISIBLE);
+                        template.setStyles(styles);
+                        template.setNativeAd(nativeAd);
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.idol.prank.call.chat.video.activities
 
+import android.R.id.background
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.nativead.NativeAd
 import com.idol.prank.call.chat.video.R
 import com.idol.prank.call.chat.video.adapter.FirstViewPagerAdapter
 import com.idol.prank.call.chat.video.utils.SharedPref
@@ -23,6 +30,7 @@ class Privacy : AppCompatActivity() {
     private var handlerRetryAd: Handler? = null
     private var retryAttempt = 0
     private val nativeAdContainerView: ViewGroup? = null
+    lateinit var templateview: View
 
     var isConnected = false
 
@@ -48,8 +56,11 @@ class Privacy : AppCompatActivity() {
         setContentView(R.layout.activity_privacy_screen)
         supportActionBar!!.hide()
         showProgressDialog()
-        progressBar = findViewById(R.id.progressBar)
 
+        templateview = findViewById(R.id.relativeLayoutadmob)
+        templateview.visibility = View.GONE
+
+        progressBar = findViewById(R.id.progressBar)
         handlerRetryAd = Handler()
 
         user = SharedPref(this)
@@ -62,6 +73,7 @@ class Privacy : AppCompatActivity() {
                 this
             )
 
+        loadnative()
 
         Handler(Looper.getMainLooper()).postDelayed({
             // Hide the progress bar and show the button
@@ -124,6 +136,29 @@ class Privacy : AppCompatActivity() {
         android.os.Handler().postDelayed({
             progressDialog.dismiss()
         }, 3000)
+    }
+
+
+    private fun loadnative(){
+        MobileAds.initialize(this)
+
+// Create the ad loader
+        val adLoader = AdLoader.Builder(this, resources.getString(R.string.nativead))
+            .forNativeAd { nativeAd: NativeAd ->
+                // Create template style
+                val styles = NativeTemplateStyle.Builder()
+                    .build()
+                templateview.visibility = View.VISIBLE
+                // Set template and native ad
+                val template: TemplateView = findViewById(R.id.my_template)
+                template.setStyles(styles)
+                template.setNativeAd(nativeAd)
+
+            }
+            .build()
+
+// Load the ad
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
 
