@@ -3,6 +3,7 @@ package com.idol.prank.call.chat.video.AdsModule;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -14,6 +15,11 @@ public class Constants {
 
     public static FrameLayout frameLayout;
     public static FrameLayout nativeframe;
+
+
+    public static Bitmap CHAR_BITMAP = null;
+
+    public static final String EXTRA_CHAR_NAME = "extra_char_name";
 
     public static String layouttype = "";
     public static final String MY_PREFS = "traffic_prefs";

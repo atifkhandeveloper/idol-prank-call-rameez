@@ -30,6 +30,8 @@ public class Constant {
 
     public static Bitmap CHAR_BITMAP;
     public static Bitmap MAIN_CHAR_BITMAP;
+    public static final String EXTRA_CHAR_NAME = "extra_char_name";
+
 
     public String storeValue = "";
     SharedPreferences preferences;

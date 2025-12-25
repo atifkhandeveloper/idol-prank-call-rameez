@@ -75,5 +75,8 @@ Here we are showing facebook ads to use.\n
         The app does not provide any real calling functionality and is designed solely for amusement.</string>
 
     <string name="nativead">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="app_open_ad_unit_id">ca-app-pub-3940256099942544/9257395921</string>
+    <string name="banner_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
 
 </resources>

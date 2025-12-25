@@ -2,62 +2,52 @@ package com.idol.prank.call.chat.video.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.ump.FormError;
+import com.idol.prank.call.chat.video.FirstMainApplication;
 import com.idol.prank.call.chat.video.R;
-
-
 import com.idol.prank.call.chat.video.utils.SharedPref;
 
-import java.util.concurrent.TimeUnit;
+public class SplashShow extends AppCompatActivity {
 
-public class SplashShow extends AppCompatActivity  {
     private SharedPref sharedPref;
+    private ProgressBar progressBar;
 
-ProgressBar progressBar;
-
-    private ProgressDialog progressDialog;
-
-    private int retry = 0;
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         progressBar = findViewById(R.id.progressBarsplash);
         sharedPref = new SharedPref(this);
-        final Handler handler1 = new Handler(Looper.getMainLooper());
-        handler1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (sharedPref.getPolicyRead("yes").equals("yes")){
-                    startActivity(new Intent(getApplicationContext(), AppWelcome.class));
-                    finish();
-                } else{
 
-                    startActivity(new Intent(getApplicationContext(), Privacy.class));
+        // Get Application class
+        FirstMainApplication app =
+                (FirstMainApplication) getApplication();
 
+        // 🔹 Preload App Open Ad
+        app.loadAd(this);
 
+        // 🔹 Splash delay
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+
+            // 🔹 Show App Open Ad after splash
+            app.showAdIfAvailable(SplashShow.this, () -> {
+
+                // 🔹 Navigate after ad is closed or fails
+                if (sharedPref.getPolicyRead("yes").equals("yes")) {
+                    startActivity(new Intent(SplashShow.this, AppWelcome.class));
+                } else {
+                    startActivity(new Intent(SplashShow.this, Privacy.class));
                 }
+                finish();
 
-            }
-        },1000);
+            });
 
+        }, 3000);
     }
-
 }

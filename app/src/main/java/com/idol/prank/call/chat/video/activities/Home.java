@@ -1,6 +1,5 @@
 package com.idol.prank.call.chat.video.activities;
 
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -18,48 +17,43 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
-import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.idol.prank.call.chat.video.R;
-
 import com.idol.prank.call.chat.video.activities.fragments.LiveChat;
 import com.idol.prank.call.chat.video.utils.Constant;
 
-
 public class Home extends AppCompatActivity {
-    Boolean checked = false;
-    RelativeLayout voice_call_button, video_call_button, characterSelect, menu, chat ;
+
+    RelativeLayout voice_call_button, video_call_button, chat;
     ImageView settings;
     FrameLayout templateview;
-    public static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 5469;
-    private static final int MY_REQUEST_CODE = 17326;
-    String str = null;
-    private int retry = 0;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
+    private InterstitialAd interstitialAd;
+    private boolean isAdShowing = false;
+    private long lastAdTime = 0;
+    private final int AD_COOLDOWN_MS = 15000; // 15 seconds cooldown
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
         takePermission();
-        loadnativead();
+        loadNativeAd();
 
         chat = findViewById(R.id.btn_message);
         voice_call_button = findViewById(R.id.btn_audio_call);
@@ -67,57 +61,104 @@ public class Home extends AppCompatActivity {
         settings = findViewById(R.id.iv_settings);
         templateview = findViewById(R.id.native_ad_frame_Main);
         templateview.setVisibility(GONE);
-//        menu = findViewById(R.id.set);
-//        characterSelect = findViewById(R.id.characterSelect);
 
+        MobileAds.initialize(this);
 
-        voice_call_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        loadInterstitial(); // preload first ad
 
-                startActivity(new Intent(Home.this, CharSelection.class));
-            }
-        });
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        voice_call_button.setOnClickListener(v ->
+                showInterstitialWithCooldown(() -> startActivity(new Intent(Home.this, CharSelection.class))));
 
-                    startActivity(new Intent(Home.this, LiveChat.class));
+        video_call_button.setOnClickListener(v ->
+                showInterstitialWithCooldown(() -> startActivity(new Intent(Home.this, CharSelection.class))));
 
-            }
-        });
+        chat.setOnClickListener(v ->
+                showInterstitialWithCooldown(() -> startActivity(new Intent(Home.this, LiveChat.class))));
 
-        video_call_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    startActivity(new Intent(Home.this, CharSelection.class));
-                }
-        });
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    startActivity(new Intent(Home.this, SettingOption.class));
-
-            }
-        });
-
-//        characterSelect.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                    startActivity(new Intent(Home.this, CharSelection.class));
-//
-//            }
-//        });
+        settings.setOnClickListener(v ->
+                startActivity(new Intent(Home.this, SettingOption.class)));
     }
 
+    // ------------------- INTERSTITIAL -------------------
 
+    private void loadInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(
+                this,
+                getString(R.string.interstitial_id),
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(InterstitialAd ad) {
+                        interstitialAd = ad;
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(LoadAdError loadAdError) {
+                        interstitialAd = null;
+                    }
+                });
+    }
+
+    private void showInterstitialWithCooldown(Runnable onComplete) {
+        long currentTime = System.currentTimeMillis();
+
+        // If cooldown not passed or ad not ready, open directly
+        if (isAdShowing || (currentTime - lastAdTime < AD_COOLDOWN_MS) || interstitialAd == null) {
+            onComplete.run();
+        } else {
+            isAdShowing = true;
+
+            interstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    // Ad closed, go to next activity
+                    isAdShowing = false;
+                    lastAdTime = System.currentTimeMillis();
+                    interstitialAd = null;
+
+                    // Preload next interstitial
+                    loadInterstitial();
+
+                    // Now move to next activity
+                    onComplete.run();
+                }
+
+                @Override
+                public void onAdFailedToShowFullScreenContent(AdError adError) {
+                    isAdShowing = false;
+                    interstitialAd = null;
+                    loadInterstitial();
+                    onComplete.run();
+                }
+            });
+
+            interstitialAd.show(this);
+        }
+    }
+
+    // ------------------- NATIVE AD -------------------
+
+    private void loadNativeAd() {
+        com.google.android.gms.ads.AdLoader adLoader = new com.google.android.gms.ads.AdLoader.Builder(this, getResources().getString(R.string.nativead))
+                .forNativeAd(nativeAd -> {
+                    NativeTemplateStyle styles = new NativeTemplateStyle.Builder().build();
+                    TemplateView template = findViewById(R.id.my_template);
+                    templateview.setVisibility(VISIBLE);
+                    template.setStyles(styles);
+                    template.setNativeAd(nativeAd);
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
+    // ------------------- PERMISSIONS -------------------
 
     private void takePermission() {
         if (Build.VERSION.SDK_INT >= 28 && !Settings.canDrawOverlays(this)) {
-            checkPermissionWed();
+            checkOverlayPermission();
         }
         if (Build.VERSION.SDK_INT < 26) {
             new WindowManager.LayoutParams(-2, -2, 2002, 40, -2);
@@ -127,106 +168,22 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    public void checkPermissionWed() {
-        if (Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(this)) {
-            return;
-        }
-        startActivityForResult(new Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", Uri.parse("package:" + getPackageName())), ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+    private void checkOverlayPermission() {
+        if (Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(this)) return;
+        startActivityForResult(
+                new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())),
+                5469);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onActivityResult(int i, int i2, Intent intent) {
-        super.onActivityResult(i, i2, intent);
-        if (i == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE && !Settings.canDrawOverlays(this)) {
-            checkPermissionWed();
-        }
-        if (i == MY_REQUEST_CODE) {
-            if (i2 == -1) {
-                if (i2 == -1) {
-                    return;
-                }
-                Log.d("RESULT_OK  :", "" + i2);
-            } else if (i2 == 0) {
-                if (i2 == 0) {
-                    return;
-                }
-                Log.d("RESULT_CANCELED  :", "" + i2);
-            } else if (i2 != 1 || i2 == 1) {
-            } else {
-                Log.d("RESULT_IN_APP_FAILED:", "" + i2);
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (checked) {
-
-        } else {
-            if (Constant.isNetworkAvailable(Home.this)) {
-                ProgressDialog progress = new ProgressDialog(Home.this);
-                progress.setTitle("Alert");
-                progress.setMessage("Please wait...");
-                progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-                progress.show();
-
-                final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        findViewById(R.id.native_ad_frame_Main).setVisibility(VISIBLE);
-                        if (!isFinishing()) {
-                            progress.dismiss();
-                        }
-                    }
-                }, 4000);
-
-            }
-        }
-
-    }
-
+    // ------------------- BACK PRESS -------------------
 
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to exit?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finishAffinity();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-
+                .setPositiveButton("Yes", (dialog, id) -> finishAffinity())
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+        builder.create().show();
     }
-
-    public void loadnativead() {
-        MobileAds.initialize(this);
-        AdLoader adLoader = new AdLoader.Builder(this, getResources().getString(R.string.nativead))
-                .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
-                    @Override
-                    public void onNativeAdLoaded(NativeAd nativeAd) {
-                        NativeTemplateStyle styles = new
-                                NativeTemplateStyle.Builder().build();
-                        TemplateView template = findViewById(R.id.my_template);
-                        templateview.setVisibility(VISIBLE);
-                        template.setStyles(styles);
-                        template.setNativeAd(nativeAd);
-                    }
-                })
-                .build();
-
-        adLoader.loadAd(new AdRequest.Builder().build());
-    }
-
 }
