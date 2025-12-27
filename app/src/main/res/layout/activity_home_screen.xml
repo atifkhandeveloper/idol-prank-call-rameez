@@ -22,7 +22,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/iconn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_video_call"
         app:layout_constraintStart_toStartOf="parent"
