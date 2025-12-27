@@ -4,336 +4,178 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
-import com.idol.prank.call.chat.video.receiver.ReceiveCalls;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.receiver.ReceiveCalls;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.Calendar;
 
+public class SelectCall extends AppCompatActivity {
 
-public class SelectCall<Int> extends AppCompatActivity {
+    // ===== CONSTANTS =====
+    public static final int PLATFORM_WHATSAPP = 1;
+    public static final int PLATFORM_FACEBOOK = 2;
+    public static final int PLATFORM_SYSTEM = 3;
 
-    private TinyDBs tinyDB;
-    private Boolean checked = false;
-    private String str = null;
-    protected static final String TAG = "SelectCallingOption";
-    public static String status_time = "Wait for 2 seconds";
-    public static int rd_form = 1;
-    public static int rd_time = 1;
-    public static int rd_vid = 1;
-    private PendingIntent pendingIntent;
+    public static final int PLATFORM_MESSENGER = 2; // <-- add this
+
+    public static final int TYPE_VIDEO = 1;
+    public static final int TYPE_AUDIO = 2;
+
+    public static int rd_form = 0;
+    public static int rd_vid = 0;
+
+    public static int rd_type = 0;  // selected call type
+    public static int rd_time = 0;
+    public static String status_time = "";
+
     private static final int ALARM_REQUEST_CODE = 134;
-    private Button back_button;
 
-    TextView tittle, callType, callType_2;
-    ImageView image_type, image_type_2;
-    LinearLayout start_call_button, callButton;
-    int i = 1;
-    private int retry = 0;
-    private RadioGroup list_template;
-    private RadioGroup list_time;
-    private RadioButton radio_facebook_btn, radio_system_call_btn;
-    RadioGroup radioGroup2, radioGroup3;
+    // ===== UI =====
+    private RadioGroup rgPlatform, rgTimer;
+    private LinearLayout startCallBtn;
 
-    String[] arrCallType = new String[]{"Whatsapp", "Facebook"};
-    String[] arrSetTimer = new String[]{"Now", "10", "30", "60", "300"};
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_calling_options);
 
-        tinyDB = new TinyDBs(this);
-
-
-        // Getting all the ids
-        findIdsWed();
-  //      LoadInterstitalAd();
-        // Back Button Adds loading stuff
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    startActivity(new Intent(SelectCall.this , Home.class));
-
-            }
-        });
-
-        //Checking weather VideoCall or Voice call was selected from home screen
-        checkingCallTypeWed();
-
-        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radio_facebook_button:
-                        str = "facebook";
-                        //  AppLovinInterstitial();
-                        break;
-                    case R.id.radio_whatsapp_button:
-                        str = "whatsapp";
-                        //  AppLovinInterstitial();
-                        break;
-                    default:
-                        return;
-                }
-            }
-        });
-        radioGroup3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radio_1:
-                        SelectCall.rd_time = 1;
-                        SelectCall.status_time = "Wait for 2 seconds";
-                        return;
-                    case R.id.radio_10:
-                        SelectCall.rd_time = Constant.TIMER_A;
-                        SelectCall.status_time = "Wait for 10 seconds";
-                        return;
-                    case R.id.radio_30:
-                        SelectCall.rd_time = Constant.TIMER_B;
-                        SelectCall.status_time = "Wait for 30 seconds";
-                        return;
-                    case R.id.radio_300:
-                        SelectCall.rd_time = Constant.TIMER_D;
-                        SelectCall.status_time = "Wait for 5 minutes";
-                        return;
-                    case R.id.radio_60:
-                        SelectCall.rd_time = Constant.TIMER_C;
-                        SelectCall.status_time = "Wait for 1 minutes";
-                        return;
-                    default:
-                        return;
-                }
-            }
-        });
-
-
-        //Passing Intent to next Activity to schedule a call
-        this.pendingIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, new Intent(this, ReceiveCalls.class), PendingIntent.FLAG_IMMUTABLE);
-        start_call_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                str = "voicecall";
-                checked = true;
-                if (radioGroup2.getCheckedRadioButtonId() == -1 && radioGroup3.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(SelectCall.this, "Please select Template & Timer", Toast.LENGTH_SHORT).show();
-                } else if (radioGroup2.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(SelectCall.this, "Please select Template", Toast.LENGTH_SHORT).show();
-                } else if (radioGroup3.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(SelectCall.this, "Please select Timer", Toast.LENGTH_SHORT).show();
-                } else {
-                        AppLovinInterstitial();
-
-
-                }
-            }
-        });
-
+        initViews();
+        detectCallTypeFromHome();
+        setupListeners();
     }
 
+    private void initViews() {
+        rgPlatform = findViewById(R.id.list_Template);
+        rgTimer = findViewById(R.id.list_time);
+        startCallBtn = findViewById(R.id.start_call_btn);
+    }
 
-    private void checkingCallTypeWed() {
-
+    // ===== AUDIO / VIDEO FROM HOME =====
+    private void detectCallTypeFromHome() {
         if (Constant.IS_VIDEO) {
+            rd_vid = TYPE_VIDEO;
             Constant.IS_VIDEO = false;
-            SelectCall.rd_vid = 1;
-
-        } else if (Constant.IS_VOICE) {
+        } else {
+            rd_vid = TYPE_AUDIO;
             Constant.IS_VOICE = false;
-            SelectCall.rd_vid = 2;
-
-        } else {
         }
-
     }
 
-    public void findIdsWed() {
-        /*     callType = findViewById(R.id.call_type);*/
-        callType_2 = findViewById(R.id.selected_call_text);
-        back_button = findViewById(R.id.back_button);
-        start_call_button = findViewById(R.id.start_call_btn);
-        tittle = (TextView) findViewById(R.id.text_Tittle);
-        /*     image_type = findViewById(R.id.calling_image);*/
-        image_type_2 = findViewById(R.id.img_type_call);
-    /*    rl_native_ad = findViewById(R.id.rl_native_ad);
-        rl_native_ad.setVisibility(View.GONE);*/
+    private void setupListeners() {
 
-        radioGroup2 = findViewById(R.id.list_Template);
-        list_template = radioGroup2;
-
-        radioGroup3 = findViewById(R.id.list_time);
-        list_time = radioGroup3;
-    }
-
-    private void CheckForNetwork() {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (checked) {
-
-        } else {
-            if (Constant.isNetworkAvailable(SelectCall.this)) {
-                ProgressDialog progress = new ProgressDialog(SelectCall.this);
-                progress.setTitle("Alert");
-                progress.setMessage("Please wait...");
-                progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-                progress.show();
-                final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (!isFinishing()) {
-                            progress.dismiss();
-                        }
-                    }
-                }, 4000);
-
+        // PLATFORM
+        rgPlatform.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_whatsapp_button) {
+                rd_form = PLATFORM_WHATSAPP;
+            } else if (checkedId == R.id.radio_facebook_button) {
+                rd_form = PLATFORM_FACEBOOK;
+            } else if (checkedId == R.id.radio_whatsapp_button) {
+                rd_form = PLATFORM_SYSTEM;
             }
-        }
+        });
 
-    }
-
-    private void AppLovinInterstitial() {
-
-            ApplovinBtns();
-
-    }
-
-    private void ApplovinBtns() {
-        if (str.contains("facebook")) {
-            SelectCall.rd_form = 2;
-        } else if (str.contains("whatsapp")) {
-            SelectCall.rd_form = 1;
-        } else if (str.contains("voicecall")) {
-            if (radioGroup2.getCheckedRadioButtonId() != -1 && radioGroup3.getCheckedRadioButtonId() != -1) {
-                if (SelectCall.rd_time == 1) {
-                    if (SelectCall.rd_form == 1) {
-                        if (SelectCall.rd_vid == 2) {
-                            Intent intent = new Intent(SelectCall.this, WhatsAppCalls.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent);
-                            SelectCall.this.finish();
-                            Log.d("CHK1", "onClick: " + "voice call");
-                            return;
-                        } else if (SelectCall.rd_vid == 1) {
-                            Log.d("CHK1", "onClick: " + "video call");
-                            Intent intent2 = new Intent(SelectCall.this, WhatsAppCalls.class);
-                            intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent2);
-                            SelectCall.this.finish();
-                            return;
-                        } else {
-                            Intent intent3 = new Intent(SelectCall.this, WhatsAppCalls.class);
-                            intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent3);
-                            SelectCall.this.finish();
-                            return;
-                        }
-                    } else if (SelectCall.rd_form == 2) {
-                        if (SelectCall.rd_vid == 2) {
-                            Intent intent4 = new Intent(SelectCall.this, FBVoiceCallScreen.class);
-                            intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent4);
-                            SelectCall.this.finish();
-                            return;
-                        } else if (SelectCall.rd_vid == 1) {
-                            Intent intent5 = new Intent(SelectCall.this, FBVoiceCallScreen.class);
-                            intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent5);
-                            SelectCall.this.finish();
-                            return;
-                        } else {
-                            Intent intent6 = new Intent(SelectCall.this, FBVoiceCallScreen.class);
-                            intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent6);
-                            SelectCall.this.finish();
-                            return;
-                        }
-                    } else if (SelectCall.rd_form != 3) {
-                        return;
-                    } else {
-                        if (SelectCall.rd_vid == 2) {
-                            Intent intent7 = new Intent(SelectCall.this, CallSystem.class);
-                            intent7.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent7);
-                            SelectCall.this.finish();
-                            return;
-                        } else if (SelectCall.rd_vid == 1) {
-                            Intent intent8 = new Intent(SelectCall.this, FBVoiceCallScreen.class);
-                            intent8.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent8);
-                            SelectCall.this.finish();
-                            return;
-                        } else {
-                            Intent intent9 = new Intent(SelectCall.this, FBVoiceCallScreen.class);
-                            intent9.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            SelectCall.this.startActivity(intent9);
-                            SelectCall.this.finish();
-                            return;
-                        }
-                    }
-                }
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(13, SelectCall.rd_time);
-                //((AlarmManager) MainActivity.this.getSystemService(NotificationCompat.CATEGORY_ALARM)).set(0, calendar.getTimeInMillis(), MainActivity.this.pendingIntent);
-                ((AlarmManager) SelectCall.this.getSystemService(Context.ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), SelectCall.this.pendingIntent);
-                Toast.makeText(SelectCall.this, SelectCall.status_time, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), Home.class));
-                SelectCall.this.finish();
-            } else {
-                if (radioGroup2.getCheckedRadioButtonId() == -1 && radioGroup3.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(SelectCall.this, "Please select Template & Timer", Toast.LENGTH_SHORT).show();
-                } else if (radioGroup2.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(SelectCall.this, "Please select Template", Toast.LENGTH_SHORT).show();
-                } else if (radioGroup3.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(SelectCall.this, "Please select Timer", Toast.LENGTH_SHORT).show();
-                }
+        // TIMER
+        rgTimer.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_1) {
+                rd_time = 1;
+                status_time = "Calling now";
+            } else if (checkedId == R.id.radio_10) {
+                rd_time = 10;
+                status_time = "Wait 10 seconds";
+            } else if (checkedId == R.id.radio_30) {
+                rd_time = 30;
+                status_time = "Wait 30 seconds";
+            } else if (checkedId == R.id.radio_60) {
+                rd_time = 60;
+                status_time = "Wait 1 minute";
             }
+        });
+
+        startCallBtn.setOnClickListener(v -> startCall());
+    }
+
+    // ===== MAIN LOGIC =====
+    private void startCall() {
+
+        if (rd_form == 0) {
+            Toast.makeText(this, "Select Call Platform", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (rd_time == 0) {
+            Toast.makeText(this, "Select Timer", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (rd_time == 1) {
+            openCallScreen();
+        } else {
+            scheduleCall();
         }
     }
 
+    private void openCallScreen() {
 
-    private void BackPress() {
+        Intent intent = null;
+
+        if (rd_form == PLATFORM_WHATSAPP) {
+            intent = (rd_vid == TYPE_VIDEO)
+                    ? new Intent(this, WhatsAppVideoCalls.class)
+                    : new Intent(this, WhatsAppVideoCalls.class);
+        }
+
+        else if (rd_form == PLATFORM_FACEBOOK) {
+            intent = (rd_vid == TYPE_VIDEO)
+                    ? new Intent(this, FBVideoCallScreen.class)
+                    : new Intent(this, FBVoiceCallScreen.class);
+        }
+
+        else if (rd_form == PLATFORM_SYSTEM) {
+            intent = new Intent(this, CallSystem.class);
+        }
+
+        if (intent == null) {
+            Toast.makeText(this, "Invalid selection", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        startActivity(intent);
+        finish();
+    }
+
+    private void scheduleCall() {
+
+        Intent alarmIntent = new Intent(this, ReceiveCalls.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                ALARM_REQUEST_CODE,
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, rd_time);
+
+        ((AlarmManager) getSystemService(Context.ALARM_SERVICE))
+                .set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        Toast.makeText(this, status_time, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, Home.class));
         finish();
     }
 
     @Override
     public void onBackPressed() {
-
-            startActivity(new Intent(SelectCall.this , Home.class));
-
+        startActivity(new Intent(this, Home.class));
+        finish();
     }
-
-    private void proceedToNextActivity() {
-        // Start the next activity here
-        startActivity(new Intent(this, SelectCall.class));
-        super.onBackPressed();
-    }
-
-
 }

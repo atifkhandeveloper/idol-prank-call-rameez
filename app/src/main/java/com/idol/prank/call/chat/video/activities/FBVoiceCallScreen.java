@@ -55,6 +55,7 @@ public class FBVoiceCallScreen extends AppCompatActivity{
 
     LinearLayout linearcalldecline;
 
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class FBVoiceCallScreen extends AppCompatActivity{
         }
 
         this.handler = new Handler();
-        this.atas = findViewById(R.id.laybawah1);
+        this.atas = findViewById(R.id.caller_name);
         this.bawah = findViewById(R.id.laybawah2);
         this.calling = findViewById(R.id.txtwaktu);
         MediaPlayer create = MediaPlayer.create(this, RingtoneManager.getDefaultUri(R.raw.facebook_tune));

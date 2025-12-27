@@ -79,8 +79,6 @@ public class WhatsAppVideoCalls extends AppCompatActivity implements SurfaceHold
 
         // Video View
         videoView = findViewById(R.id.videoView);
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.rainbow_video));
-        videoView.setOnPreparedListener(mp -> mp.setLooping(true));
 
         // Camera preview
         surfaceView = findViewById(R.id.surfaceView);
@@ -90,7 +88,7 @@ public class WhatsAppVideoCalls extends AppCompatActivity implements SurfaceHold
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
 
-        // Receive character data
+        // Receive character data and set video
         receiveCharacterData();
 
         // Ringtone
@@ -129,14 +127,49 @@ public class WhatsAppVideoCalls extends AppCompatActivity implements SurfaceHold
             charName = tinyDB.getString("char_name", "Caller");
         }
 
+        // Set caller name
         nameuser.setText(charName);
 
-        if (Constant.CHAR_BITMAP != null) {
-            circleImageView.setImageBitmap(Constant.CHAR_BITMAP);
-        } else {
-            circleImageView.setImageResource(R.drawable.icon_splach_new);
+        // Set character image
+        switch (charName) {
+            case "Santa":
+                circleImageView.setImageResource(R.drawable.one);
+                break;
+            case "Hikari":
+                circleImageView.setImageResource(R.drawable.two);
+                break;
+            case "Nanami":
+                circleImageView.setImageResource(R.drawable.three);
+                break;
+            case "Daichi":
+                circleImageView.setImageResource(R.drawable.four);
+                break;
+            case "Kaori":
+                circleImageView.setImageResource(R.drawable.five);
+                break;
+            case "Takumi":
+                circleImageView.setImageResource(R.drawable.six);
+                break;
+            default:
+                if (Constant.CHAR_BITMAP != null) {
+                    circleImageView.setImageBitmap(Constant.CHAR_BITMAP);
+                } else {
+                    circleImageView.setImageResource(R.drawable.icon_splach_new);
+                }
+                break;
         }
+
+        // Set video according to character name dynamically
+        String videoName = charName.toLowerCase(); // assuming raw file names are lowercase
+        int videoResId = getResources().getIdentifier(videoName, "raw", getPackageName());
+
+        // If video exists, use it. Otherwise use default
+        if (videoResId == 0) videoResId = R.raw.rainbow_video;
+
+        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + videoResId));
+        videoView.setOnPreparedListener(mp -> mp.setLooping(true));
     }
+
 
     // ================= CALL ACTIONS =================
 

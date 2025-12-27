@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.ProgressBar;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.idol.prank.call.chat.video.FirstMainApplication;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.utils.SharedPref;
@@ -16,6 +17,7 @@ public class SplashShow extends AppCompatActivity {
 
     private SharedPref sharedPref;
     private ProgressBar progressBar;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class SplashShow extends AppCompatActivity {
 
         // 🔹 Preload App Open Ad
         app.loadAd(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // 🔹 Splash delay
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
