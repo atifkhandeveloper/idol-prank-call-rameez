@@ -15,14 +15,20 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.nativead.NativeAd
+import com.idol.prank.call.chat.video.BaseActivity
 import com.idol.prank.call.chat.video.R
+import com.idol.prank.call.chat.video.databinding.ActivityPrivacyScreenBinding
+import com.idol.prank.call.chat.video.databinding.ActivityTermsAndConditionBinding
 
-class TermsAndConditionActivity : AppCompatActivity() {
+class TermsAndConditionActivity : BaseActivity() {
 
     private var checkBoxtermsandcon: CheckBox? = null
     private var textcontinue: TextView? = null
     private var checkad: Boolean? = null
     lateinit var templateview: View
+
+    lateinit var binding: ActivityTermsAndConditionBinding
+
 
 
     private var handlerRetryAd: Handler? = null
@@ -34,7 +40,10 @@ class TermsAndConditionActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_terms_and_condition)
+        binding = ActivityTermsAndConditionBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+        applyEdgeToEdgePadding(binding.root)
+        setContentView(binding.root)
 
         checkBoxtermsandcon = findViewById(R.id.checkBox)
         textcontinue = findViewById(R.id.continuedata)

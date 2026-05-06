@@ -16,10 +16,12 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.nativead.NativeAd
+import com.idol.prank.call.chat.video.BaseActivity
 import com.idol.prank.call.chat.video.R
 import com.idol.prank.call.chat.video.adapter.ImagePagerAdapter
+import com.idol.prank.call.chat.video.databinding.ActivityHowToUseBinding
 
-class HowToUseActivity : AppCompatActivity()
+class HowToUseActivity : BaseActivity()
 {
     private lateinit var viewPager: ViewPager
     private lateinit var pagerAdapter: ImagePagerAdapter
@@ -31,11 +33,16 @@ class HowToUseActivity : AppCompatActivity()
     private val nativeAdContainerView: ViewGroup? = null
     private var nativeAdContainerr: FrameLayout? = null
     lateinit var templateview: View
+    lateinit var binding: ActivityHowToUseBinding
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_how_to_use)
+        binding = ActivityHowToUseBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+        applyEdgeToEdgePadding(binding.root)
+        setContentView(binding.root)
+
         viewPager = findViewById(R.id.viewPagerhowtouse)
 
         nextbtn = findViewById(R.id.btnnext)

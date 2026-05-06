@@ -22,12 +22,15 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityWhatsAppVideoCallScreenBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityWhatsAppVoiceCallScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class WhatsAppVideoCalls extends AppCompatActivity implements SurfaceHolder.Callback {
+public class WhatsAppVideoCalls extends BaseActivity implements SurfaceHolder.Callback {
 
     private TinyDBs tinyDB;
     private Handler handler;
@@ -44,10 +47,17 @@ public class WhatsAppVideoCalls extends AppCompatActivity implements SurfaceHold
 
     private Camera camera;
     private MediaPlayer mp;
+    private ActivityWhatsAppVideoCallScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        binding = ActivityWhatsAppVideoCallScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        getWindow().getDecorView().setSystemUiVisibility(1280);
+        getWindow().setStatusBarColor(1140850688);
 
         // Fullscreen + lockscreen
         getWindow().setFlags(
@@ -62,8 +72,7 @@ public class WhatsAppVideoCalls extends AppCompatActivity implements SurfaceHold
             setShowWhenLocked(true);
             setTurnScreenOn(true);
         }
-
-        setContentView(R.layout.activity_whats_app_video_call_screen);
+        setContentView(binding.getRoot());
 
         tinyDB = new TinyDBs(this);
         handler = new Handler();

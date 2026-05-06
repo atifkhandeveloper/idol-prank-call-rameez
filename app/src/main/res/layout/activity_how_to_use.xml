@@ -61,6 +61,9 @@
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Next"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:visibility="visible"
                     android:background="@drawable/skip_button"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -105,9 +108,10 @@
 
                     <com.google.android.ads.nativetemplates.TemplateView
                         android:id="@+id/my_template"
-                        app:gnt_template_type="@layout/gnt_medium_template_view_new"
+                        app:gnt_template_type="@layout/gnt_small_template_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"

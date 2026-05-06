@@ -18,12 +18,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivitySystemCallScreenBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityWelcomeScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CallSystem extends AppCompatActivity {
+public class CallSystem extends BaseActivity {
 
     int MilliSeconds;
     long MillisecondTime;
@@ -48,13 +51,18 @@ public class CallSystem extends AppCompatActivity {
     private RelativeLayout tolak;
     private RelativeLayout rlMain;
     long UpdateTime = 0;
+    private ActivitySystemCallScreenBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivitySystemCallScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
         getWindow().getDecorView().setSystemUiVisibility(1280);
         getWindow().setStatusBarColor(1140850688);
-        setContentView(R.layout.activity_system_call_screen);
+        setContentView(binding.getRoot());
 
         Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);

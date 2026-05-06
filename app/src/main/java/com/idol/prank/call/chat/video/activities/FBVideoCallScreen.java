@@ -23,12 +23,15 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityCombineMakeCallBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityFaceBookVideoCallScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FBVideoCallScreen extends AppCompatActivity implements SurfaceHolder.Callback {
+public class FBVideoCallScreen extends BaseActivity implements SurfaceHolder.Callback {
 
     private TinyDBs tinyDB;
     private LinearLayout atas, bawah;
@@ -44,14 +47,19 @@ public class FBVideoCallScreen extends AppCompatActivity implements SurfaceHolde
     private Handler handler;
 
     private String charName = "Caller";
+    private ActivityFaceBookVideoCallScreenBinding binding;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityFaceBookVideoCallScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
         getWindow().getDecorView().setSystemUiVisibility(1280);
         getWindow().setStatusBarColor(1140850688);
-        setContentView(R.layout.activity_face_book_video_call_screen);
+        setContentView(binding.getRoot());
 
         tinyDB = new TinyDBs(this);
 

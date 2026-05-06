@@ -19,11 +19,14 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.nativead.NativeAd
+import com.idol.prank.call.chat.video.BaseActivity
 import com.idol.prank.call.chat.video.R
 import com.idol.prank.call.chat.video.adapter.FirstViewPagerAdapter
+import com.idol.prank.call.chat.video.databinding.ActivityHowToUseBinding
+import com.idol.prank.call.chat.video.databinding.ActivityPrivacyScreenBinding
 import com.idol.prank.call.chat.video.utils.SharedPref
 import me.relex.circleindicator.CircleIndicator3
-class Privacy : AppCompatActivity() {
+class Privacy : BaseActivity() {
 
     var user: SharedPref? = null
     var boolean: Boolean? = null
@@ -31,6 +34,7 @@ class Privacy : AppCompatActivity() {
     private var retryAttempt = 0
     private val nativeAdContainerView: ViewGroup? = null
     lateinit var templateview: View
+    lateinit var binding: ActivityPrivacyScreenBinding
 
     var isConnected = false
 
@@ -53,7 +57,10 @@ class Privacy : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_privacy_screen)
+        binding = ActivityPrivacyScreenBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+        applyEdgeToEdgePadding(binding.root)
+        setContentView(binding.root)
         supportActionBar!!.hide()
         showProgressDialog()
 

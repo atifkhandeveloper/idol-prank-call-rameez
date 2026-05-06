@@ -23,13 +23,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.idol.prank.call.chat.video.AdsModule.Constants;
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
+import com.idol.prank.call.chat.video.BaseActivity;
+import com.idol.prank.call.chat.video.databinding.ActivitySelectCallingOptionsBinding;
+import com.idol.prank.call.chat.video.databinding.ActivitySelectCallingOptionssBinding;
 import com.idol.prank.call.chat.video.receiver.ReceiveCalls;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.Calendar;
 
-public class SelectVideoCall<Int> extends AppCompatActivity {
+public class SelectVideoCall<Int> extends BaseActivity {
 
     private TinyDBs tinyDB;
 
@@ -56,12 +59,16 @@ public class SelectVideoCall<Int> extends AppCompatActivity {
 
     String [] arrCallType = new String[]{"Whatsapp","Facebook"};
     String [] arrSetTimer = new String[]{"Now","10","30","60","300"};
+    private ActivitySelectCallingOptionssBinding binding;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_calling_optionss);
+        binding = ActivitySelectCallingOptionssBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         tinyDB = new TinyDBs(this);
         // Getting all the ids

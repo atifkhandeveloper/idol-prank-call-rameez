@@ -55,7 +55,9 @@
         android:layout_width="283dp"
         android:layout_height="44dp"
         android:layout_marginTop="32dp"
-
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_button"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:text="Continue"
@@ -89,8 +91,9 @@
 
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/my_template"
-            app:gnt_template_type="@layout/gnt_medium_template_view_new"
+            app:gnt_template_type="@layout/gnt_medium_template_view"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="match_parent" />
     </RelativeLayout>
 

@@ -129,6 +129,9 @@
                                 android:id="@+id/laytolak"
                                 android:layout_width="55dp"
                                 android:layout_height="55dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="@drawable/ripple_button"
                                 android:layout_centerInParent="true"
                                 android:gravity="center">
 
@@ -157,6 +160,9 @@
                                 android:id="@+id/layterima"
                                 android:layout_width="55dp"
                                 android:layout_height="55dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="@drawable/ripple_button"
                                 android:layout_centerInParent="true"
                                 android:gravity="center">
 

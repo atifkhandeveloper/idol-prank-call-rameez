@@ -6,6 +6,7 @@ import static android.view.View.VISIBLE;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -32,15 +33,24 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.activities.fragments.LiveChat;
+import com.idol.prank.call.chat.video.databinding.ActivityHomeScreenBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityWelcomeScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
-public class Home extends AppCompatActivity {
+public class Home extends BaseActivity {
 
     RelativeLayout voice_call_button, video_call_button, chat;
     ImageView settings;
     FrameLayout templateview;
+    private ActivityHomeScreenBinding binding;
+
 
     private InterstitialAd interstitialAd;
     private boolean isAdShowing = false;
@@ -50,10 +60,14 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         takePermission();
         loadNativeAd();
+        showGoogleRateDialog(this);
 
         chat = findViewById(R.id.btn_message);
         voice_call_button = findViewById(R.id.btn_audio_call);
@@ -185,5 +199,28 @@ public class Home extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, id) -> finishAffinity())
                 .setNegativeButton("No", (dialog, id) -> dialog.cancel());
         builder.create().show();
+    }
+
+    public void showGoogleRateDialog(Activity activity) {
+
+        ReviewManager manager = ReviewManagerFactory.create(activity);
+
+        Task<ReviewInfo> request = manager.requestReviewFlow();
+
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+
+                ReviewInfo reviewInfo = task.getResult();
+
+                Task<Void> flow = manager.launchReviewFlow(activity, reviewInfo);
+
+                flow.addOnCompleteListener(task2 -> {
+                    // Review flow finished (no need to check result)
+                });
+
+            } else {
+                // Handle error if needed
+            }
+        });
     }
 }

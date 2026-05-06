@@ -25,13 +25,16 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityCharacterSelectBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityCombineMakeCallBinding;
 import com.idol.prank.call.chat.video.receiver.ReceiveCalls;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.Calendar;
 
-public class CombineMakeCallActivity extends AppCompatActivity {
+public class CombineMakeCallActivity extends BaseActivity {
 
     // UI
     RadioGroup radioGroupCalls, radioGroupTime;
@@ -46,11 +49,16 @@ public class CombineMakeCallActivity extends AppCompatActivity {
     private String selectedCharName = "";
     private ProgressDialog progressDialog;
     private static final int ALARM_REQUEST_CODE = 134;
+    private ActivityCombineMakeCallBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_combine_make_call);
+        binding = ActivityCombineMakeCallBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         // ===== INIT UI =====
         radioGroupCalls = findViewById(R.id.list_calls);

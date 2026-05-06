@@ -37,6 +37,9 @@
         android:layout_marginHorizontal="24dp"
         app:cardCornerRadius="16dp"
         android:background="#FF6B6B"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_button"
         app:layout_constraintTop_toBottomOf="@id/iv_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +87,9 @@
         android:layout_marginHorizontal="24dp"
         app:cardCornerRadius="16dp"
         android:background="#6CA6FF"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_button"
         app:layout_constraintTop_toBottomOf="@id/btn_video_call"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,6 +137,9 @@
         android:layout_marginHorizontal="24dp"
         app:cardCornerRadius="16dp"
         android:background="#FFD166"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_button"
         app:layout_constraintTop_toBottomOf="@id/btn_message"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -184,8 +193,9 @@
 
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/my_template"
-            app:gnt_template_type="@layout/gnt_medium_template_view_new"
+            app:gnt_template_type="@layout/gnt_medium_template_view"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="match_parent" />
     </FrameLayout>
 

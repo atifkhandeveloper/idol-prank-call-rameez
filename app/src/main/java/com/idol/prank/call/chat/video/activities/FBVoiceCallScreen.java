@@ -21,14 +21,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityFaceBookVideoCallScreenBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityFaceBookVoiceCallScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FBVoiceCallScreen extends AppCompatActivity{
+public class FBVoiceCallScreen extends BaseActivity {
 
     String string = "";
     private TinyDBs tinyDB;
@@ -54,15 +57,19 @@ public class FBVoiceCallScreen extends AppCompatActivity{
 
 
     LinearLayout linearcalldecline;
+    private ActivityFaceBookVoiceCallScreenBinding binding;
+
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityFaceBookVoiceCallScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
         getWindow().getDecorView().setSystemUiVisibility(1280);
         getWindow().setStatusBarColor(1140850688);
-        setContentView(R.layout.activity_face_book_voice_call_screen);
-
+        setContentView(binding.getRoot());
         tinyDB = new TinyDBs(this);
 
         Window win = getWindow();

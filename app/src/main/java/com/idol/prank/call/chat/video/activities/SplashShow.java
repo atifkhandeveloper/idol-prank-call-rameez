@@ -9,20 +9,28 @@ import android.os.Looper;
 import android.widget.ProgressBar;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.FirstMainApplication;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityMainBinding;
+import com.idol.prank.call.chat.video.databinding.ActivitySettingScreenBinding;
 import com.idol.prank.call.chat.video.utils.SharedPref;
 
-public class SplashShow extends AppCompatActivity {
+public class SplashShow extends BaseActivity {
 
     private SharedPref sharedPref;
     private ProgressBar progressBar;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         progressBar = findViewById(R.id.progressBarsplash);
         sharedPref = new SharedPref(this);

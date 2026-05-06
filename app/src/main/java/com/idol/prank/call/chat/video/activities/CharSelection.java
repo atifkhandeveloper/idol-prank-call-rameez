@@ -21,18 +21,26 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityCharacterSelectBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityWelcomeScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
-public class CharSelection extends AppCompatActivity {
+public class CharSelection extends BaseActivity {
 
     TemplateView template;
+    private ActivityCharacterSelectBinding binding;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_character_select);
+        binding = ActivityCharacterSelectBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         template = findViewById(R.id.my_template);
         template.setVisibility(GONE);

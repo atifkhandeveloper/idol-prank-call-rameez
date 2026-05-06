@@ -28,17 +28,23 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.idol.prank.call.chat.video.AdsModule.Constants;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityWelcomeScreenBinding;
 
-public class AppWelcome extends AppCompatActivity {
+public class AppWelcome extends BaseActivity {
 
     private InterstitialAd interstitialAd;
     private RelativeLayout templateview;
+    private ActivityWelcomeScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen);
+        binding = ActivityWelcomeScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         showProgressDialog();
 

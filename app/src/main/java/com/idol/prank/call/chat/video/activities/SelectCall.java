@@ -11,13 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityHomeScreenBinding;
+import com.idol.prank.call.chat.video.databinding.ActivitySelectCallingOptionsBinding;
+import com.idol.prank.call.chat.video.databinding.ActivitySelectCallingOptionssBinding;
 import com.idol.prank.call.chat.video.receiver.ReceiveCalls;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.Calendar;
 
-public class SelectCall extends AppCompatActivity {
+public class SelectCall extends BaseActivity {
 
     // ===== CONSTANTS =====
     public static final int PLATFORM_WHATSAPP = 1;
@@ -41,11 +45,16 @@ public class SelectCall extends AppCompatActivity {
     // ===== UI =====
     private RadioGroup rgPlatform, rgTimer;
     private LinearLayout startCallBtn;
+    private ActivitySelectCallingOptionsBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_calling_options);
+        binding = ActivitySelectCallingOptionsBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         initViews();
         detectCallTypeFromHome();

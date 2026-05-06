@@ -38,6 +38,9 @@
             android:fontFamily="@font/mrsmonsterrotate2"
             android:textAlignment="center"
             android:textColor="@color/pink"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_button"
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
@@ -68,6 +71,9 @@
                     app:layout_constraintWidth_percent="0.40"
                     android:src="@drawable/one"
                     android:scaleType="fitXY"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -79,6 +85,9 @@
                     app:layout_constraintWidth_percent="0.40"
                     android:src="@drawable/two"
                     android:scaleType="fitXY"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -101,6 +110,9 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/three"
                     android:scaleType="fitXY"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toBottomOf="@id/native_ad_frame_Char1"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -113,6 +125,9 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/four"
                     android:scaleType="fitXY"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toBottomOf="@id/native_ad_frame_Char1"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -135,6 +150,9 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/five"
                     android:scaleType="fitXY"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toBottomOf="@id/native_ad_frame_Char2"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -147,13 +165,16 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/six"
                     android:scaleType="fitXY"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toBottomOf="@id/native_ad_frame_Char2"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <com.google.android.ads.nativetemplates.TemplateView
                     android:id="@+id/my_template"
-                    app:gnt_template_type="@layout/gnt_medium_template_view_new"
+                    app:gnt_template_type="@layout/gnt_small_template_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"

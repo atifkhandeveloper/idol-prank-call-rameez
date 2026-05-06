@@ -62,6 +62,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_7sdp">
@@ -92,6 +95,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_7sdp">
@@ -109,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_36sdp"
-                        android:text="Rate us(AD)"
+                        android:text="Rate us"
                         android:textColor="@color/black"
                         android:textSize="22sp">
 
@@ -122,6 +128,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_7sdp">
@@ -151,6 +160,9 @@
                     android:id="@+id/privacy_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:layout_marginLeft="@dimen/_35sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="horizontal"
@@ -182,6 +194,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_button"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_7sdp">
@@ -230,8 +245,9 @@
 
             <com.google.android.ads.nativetemplates.TemplateView
                 android:id="@+id/my_template"
-                app:gnt_template_type="@layout/gnt_medium_template_view_new"
+                app:gnt_template_type="@layout/gnt_medium_template_view"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_height="match_parent" />
 
         </RelativeLayout>

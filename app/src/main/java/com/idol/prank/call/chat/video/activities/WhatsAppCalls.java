@@ -21,14 +21,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.idol.prank.call.chat.video.AdsModule.Constants;
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
+import com.idol.prank.call.chat.video.databinding.ActivityMainBinding;
+import com.idol.prank.call.chat.video.databinding.ActivityWhatsAppVoiceCallScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class WhatsAppCalls extends AppCompatActivity  {
+public class WhatsAppCalls extends BaseActivity {
 
 
 
@@ -56,13 +59,18 @@ public class WhatsAppCalls extends AppCompatActivity  {
     long UpdateTime = 0;
     private int retry = 0;
     private LinearLayout mLyAds;
+    private ActivityWhatsAppVoiceCallScreenBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityWhatsAppVoiceCallScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
         getWindow().getDecorView().setSystemUiVisibility(1280);
         getWindow().setStatusBarColor(1140850688);
-        setContentView(R.layout.activity_whats_app_voice_call_screen);
+        setContentView(binding.getRoot());
 
         tinyDB = new TinyDBs(this);
 

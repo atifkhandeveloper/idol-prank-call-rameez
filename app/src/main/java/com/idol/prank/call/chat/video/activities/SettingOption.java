@@ -28,17 +28,20 @@ import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.nativead.NativeAd;
+import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
 
 
 import com.idol.prank.call.chat.video.activities.fragments.LiveChat;
+import com.idol.prank.call.chat.video.databinding.ActivitySelectCallingOptionsBinding;
+import com.idol.prank.call.chat.video.databinding.ActivitySettingScreenBinding;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class SettingOption extends AppCompatActivity {
+public class SettingOption extends BaseActivity {
 
 
   /*  private NativeAd nativeAd;
@@ -59,14 +62,19 @@ public class SettingOption extends AppCompatActivity {
     int i=1;
 
     private int retry = 0;
+    private ActivitySettingScreenBinding binding;
 
-/*    private com.facebook.ads.InterstitialAd interstitialAdfb = null;*/
+
+    /*    private com.facebook.ads.InterstitialAd interstitialAdfb = null;*/
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_screen);
+        binding = ActivitySettingScreenBinding.inflate(getLayoutInflater());
+        enableEdgeToEdge();
+        applyEdgeToEdgePadding(binding.getRoot());
+        setContentView(binding.getRoot());
 
         share = findViewById(R.id.share_button);
         home = findViewById(R.id.home_button);
@@ -132,7 +140,7 @@ public class SettingOption extends AppCompatActivity {
         moreApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Constant.moreApps(SettingOption.this,"Niklit Studio Apps");
+                Constant.moreApps(SettingOption.this,"fateetech");
             }
         });
     }

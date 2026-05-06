@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rlMain"
-    tools:context="com.strapes.android.addams.fake.call.wednesday.activities.SystemCallScreen">
+    android:id="@+id/rlMain">
 
     <ImageView
         android:id="@+id/imguser2"
@@ -163,6 +162,9 @@
                             <RelativeLayout
                                 android:id="@+id/layclose2"
                                 android:layout_width="65dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="@drawable/ripple_button"
                                 android:layout_height="65dp"
                                 android:layout_centerInParent="true"
                                 android:layout_marginBottom="20dp"
@@ -185,6 +187,9 @@
                                 android:id="@+id/layterima"
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="@drawable/ripple_button"
                                 android:layout_centerInParent="true"
                                 android:layout_marginBottom="20dp"
                                 android:gravity="center">

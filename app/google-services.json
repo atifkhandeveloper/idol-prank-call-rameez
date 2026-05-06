@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "360867551170",
+    "project_id": "idol-prank-call-1bfba",
+    "storage_bucket": "idol-prank-call-1bfba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360867551170:android:e63481a6f764c0ff6ca85b",
+        "android_client_info": {
+          "package_name": "com.idol.prank.call.chat.video"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASbFKXbRZ3Ajcq0aFoVyn87Ch0_lwq0jE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
