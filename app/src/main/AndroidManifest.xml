@@ -101,7 +101,11 @@
         <activity
             android:name=".activities.AppWelcome"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- &lt;!&ndash; -->
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activities.PremiumActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar" /><!-- &lt;!&ndash; -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.intent.action.MAIN" /> -->
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -122,7 +126,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <receiver
             android:name="com.idol.prank.call.chat.video.receiver.ReceiveCalls"
             android:enabled="true"

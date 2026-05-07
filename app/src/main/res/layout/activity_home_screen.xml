@@ -7,11 +7,26 @@
     android:background="#FFFFFF">
 
     <!-- Settings Icon -->
+    <!-- Crown Lottie -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/pro"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/crown"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_settings"/>
+
+    <!-- Settings Icon -->
     <ImageView
         android:id="@+id/iv_settings"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/new_settings"
         android:tint="@color/pink"
         app:layout_constraintTop_toTopOf="parent"

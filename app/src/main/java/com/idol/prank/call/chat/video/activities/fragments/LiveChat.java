@@ -25,6 +25,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.activities.Home;
+import com.idol.prank.call.chat.video.activities.PremiumManager;
 import com.idol.prank.call.chat.video.utils.Constant;
 
 import android.os.Bundle;
@@ -62,8 +63,12 @@ public class LiveChat extends AppCompatActivity {
             }
         });
 
-        if (Constant.isNetworkAvailable(this)) {
-            loadAdaptiveCollapsibleBanner();
+
+
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+            if (Constant.isNetworkAvailable(this)) {
+                loadAdaptiveCollapsibleBanner();
+            }
         }
     }
 

@@ -62,7 +62,11 @@ class Privacy : BaseActivity() {
         applyEdgeToEdgePadding(binding.root)
         setContentView(binding.root)
         supportActionBar!!.hide()
-        showProgressDialog()
+
+        if (PremiumManager.shouldShowAds(this)) {
+//            showProgressDialog()
+            loadnative()
+        }
 
         templateview = findViewById(R.id.relativeLayoutadmob)
         templateview.visibility = View.GONE
@@ -79,8 +83,6 @@ class Privacy : BaseActivity() {
             FirstViewPagerAdapter(
                 this
             )
-
-        loadnative()
 
         Handler(Looper.getMainLooper()).postDelayed({
             // Hide the progress bar and show the button

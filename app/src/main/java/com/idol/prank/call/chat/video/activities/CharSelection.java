@@ -44,7 +44,11 @@ public class CharSelection extends BaseActivity {
 
         template = findViewById(R.id.my_template);
         template.setVisibility(GONE);
-        loadNativeAd();
+
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+            loadNativeAd();
+        }
+
 
         // Character Clicks
         setupCharacterClick(R.id.char1, 1, "Santa", R.drawable.one);

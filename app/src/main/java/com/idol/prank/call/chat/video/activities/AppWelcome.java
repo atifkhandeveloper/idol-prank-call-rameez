@@ -46,13 +46,19 @@ public class AppWelcome extends BaseActivity {
         applyEdgeToEdgePadding(binding.getRoot());
         setContentView(binding.getRoot());
 
-        showProgressDialog();
+
 
         templateview = findViewById(R.id.relativeLayoutadmob);
         templateview.setVisibility(GONE);
 
-        loadNativeAd();
-        loadInterstitialAd();
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+//            showProgressDialog();
+            loadNativeAd();
+            loadInterstitialAd();
+        }
+
+
+
 
         ImageView imageView = findViewById(R.id.anim);
         Glide.with(this)
@@ -125,7 +131,18 @@ public class AppWelcome extends BaseActivity {
     // ---------------- NAVIGATION ----------------
 
     private void openHome() {
-        startActivity(new Intent(AppWelcome.this, Home.class));
+
+        if (PremiumManager.INSTANCE.isPremium(this)) {
+
+            // 🔥 Premium user → skip paywall
+            startActivity(new Intent(AppWelcome.this, Home.class));
+
+        } else {
+
+            // 🔥 Non-premium → show paywall
+            startActivity(new Intent(AppWelcome.this, PremiumActivity.class));
+        }
+
         finish();
     }
 

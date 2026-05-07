@@ -18,6 +18,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs
+import com.idol.prank.call.chat.video.activities.PremiumManager
 import java.util.Date
 
 
@@ -34,9 +35,11 @@ class FirstMainApplication : MultiDexApplication(), Application.ActivityLifecycl
         instance = this   // ✅ REQUIRED
         registerActivityLifecycleCallbacks(this)
 
+        if (PremiumManager.shouldShowAds(this)) {
+            ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+            appOpenAdManager = AppOpenAdManager()
+        }
 
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        appOpenAdManager = AppOpenAdManager()
         myTinyDBs = TinyDBs(this)
 
     }

@@ -66,7 +66,13 @@ public class Home extends BaseActivity {
         setContentView(binding.getRoot());
 
         takePermission();
-        loadNativeAd();
+
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+//            showProgressDialog();
+            loadNativeAd();
+            loadInterstitial(); // preload first ad
+
+        }
         showGoogleRateDialog(this);
 
         chat = findViewById(R.id.btn_message);
@@ -78,7 +84,12 @@ public class Home extends BaseActivity {
 
         MobileAds.initialize(this);
 
-        loadInterstitial(); // preload first ad
+        if (PremiumManager.INSTANCE.isPremium(this)) {
+            binding.pro.setVisibility(GONE);
+        }else{
+            binding.pro.setVisibility(VISIBLE);
+        }
+
 
         voice_call_button.setOnClickListener(v ->
                 showInterstitialWithCooldown(() -> startActivity(new Intent(Home.this, CharSelection.class))));
@@ -91,6 +102,9 @@ public class Home extends BaseActivity {
 
         settings.setOnClickListener(v ->
                 startActivity(new Intent(Home.this, SettingOption.class)));
+
+        binding.pro.setOnClickListener(v ->
+                startActivity(new Intent(Home.this, PremiumActivity.class)));
     }
 
     // ------------------- INTERSTITIAL -------------------

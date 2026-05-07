@@ -52,8 +52,10 @@ class TermsAndConditionActivity : BaseActivity() {
         templateview = findViewById(R.id.relativeLayoutadmob)
         templateview.visibility = View.GONE
 
-        showProgressDialog()
-        loadnative()
+        if (PremiumManager.shouldShowAds(this)) {
+//            showProgressDialog()
+            loadnative()
+        }
 
         checkBoxtermsandcon!!.setOnCheckedChangeListener { _, isChecked ->
             textcontinue!!.visibility = if (isChecked) {

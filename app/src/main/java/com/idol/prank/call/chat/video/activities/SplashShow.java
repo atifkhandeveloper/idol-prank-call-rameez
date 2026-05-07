@@ -40,7 +40,13 @@ public class SplashShow extends BaseActivity {
                 (FirstMainApplication) getApplication();
 
         // 🔹 Preload App Open Ad
-        app.loadAd(this);
+
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+
+            app.loadAd(this);
+
+        }
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // 🔹 Splash delay

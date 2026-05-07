@@ -79,8 +79,12 @@ public class CombineMakeCallActivity extends BaseActivity {
         receiveCharacterData();
 
         // ===== ADS & LOADER =====
-        showProgressDialog();
-        loadNativeAd();
+
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+//            showProgressDialog();
+            loadNativeAd();
+        }
+
 
         // ===== BACK =====
         backIcon.setOnClickListener(v -> {

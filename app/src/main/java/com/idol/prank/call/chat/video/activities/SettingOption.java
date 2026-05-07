@@ -82,9 +82,14 @@ public class SettingOption extends BaseActivity {
         moreApps = findViewById(R.id.more_apps);
         rateUs = findViewById(R.id.rate_us_button);
         back_button = findViewById(R.id.back_button);
-        showProgressDialog();
 
+        if (PremiumManager.INSTANCE.shouldShowAds(this)) {
+
+        //showProgressDialog();
         loadnativead();
+
+        }
+
         templateview = findViewById(R.id.relativeLayoutadmob);
         templateview.setVisibility(GONE);
 

@@ -55,8 +55,13 @@ class HowToUseActivity : BaseActivity()
 
 
 
-        showProgressDialog()
-        loadnative()
+
+        if (PremiumManager.shouldShowAds(this)) {
+//            showProgressDialog()
+            loadnative()
+        }
+
+
 
 
 
