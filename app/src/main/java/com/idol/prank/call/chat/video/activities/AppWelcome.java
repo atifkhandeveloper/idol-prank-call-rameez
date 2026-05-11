@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,12 +22,15 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdValue;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.idol.prank.call.chat.video.AdsModule.Constants;
 import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
@@ -89,7 +93,19 @@ public class AppWelcome extends BaseActivity {
                     @Override
                     public void onAdLoaded(InterstitialAd ad) {
                         interstitialAd = ad;
+
+                        interstitialAd.setOnPaidEventListener(adValue -> {
+
+                            double revenue = adValue.getValueMicros() / 1_000_000.0;
+                            String currency = adValue.getCurrencyCode();
+
+                            Log.d("Ads", "Interstitial Revenue: " + revenue + " " + currency);
+
+                            sendRevenueToFirebase(revenue, currency);
+                        });
                         setInterstitialCallback();
+
+
                     }
 
                     @Override
@@ -158,6 +174,20 @@ public class AppWelcome extends BaseActivity {
 
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.nativead))
                 .forNativeAd(nativeAd -> {
+
+                    nativeAd.setOnPaidEventListener(new OnPaidEventListener() {
+                        @Override
+                        public void onPaidEvent(AdValue adValue) {
+
+                            double revenue = adValue.getValueMicros() / 1000000.0;
+                            String currency = adValue.getCurrencyCode();
+
+                            Log.d("Ads", "Native Revenue: " + revenue + " " + currency);
+
+                            sendRevenueToFirebase(revenue, currency);
+                        }
+                    });
+
                     NativeTemplateStyle styles =
                             new NativeTemplateStyle.Builder().build();
                     TemplateView template = findViewById(R.id.my_template);
@@ -180,5 +210,18 @@ public class AppWelcome extends BaseActivity {
         progressDialog.show();
 
         new Handler().postDelayed(progressDialog::dismiss, 3000);
+    }
+
+    public void sendRevenueToFirebase(double value, String currency) {
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("value", value);
+        bundle.putString("currency", currency);
+        bundle.putString("ad_platform", "admob");
+        bundle.putString("ad_source", "admob");
+        bundle.putString("ad_format", "native"); // IMPORTANT
+
+        FirebaseAnalytics.getInstance(this)
+                .logEvent("ad_impression", bundle);
     }
 }

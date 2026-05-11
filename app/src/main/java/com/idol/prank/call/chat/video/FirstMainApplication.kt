@@ -16,6 +16,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
+import com.google.firebase.analytics.FirebaseAnalytics
 
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs
 import com.idol.prank.call.chat.video.activities.PremiumManager
@@ -152,9 +153,20 @@ class FirstMainApplication : MultiDexApplication(), Application.ActivityLifecycl
                         // Called when an app open ad has loaded.
                         Log.d(LOG_TAG, "App open ad loaded.")
 
+
+
                         appOpenAd = ad
                         isLoadingAd = false
                         loadTime = Date().time
+
+                        ad.setOnPaidEventListener { adValue ->
+                            val revenue = adValue.valueMicros / 1_000_000.0
+                            val currency = adValue.currencyCode
+
+                            Log.d("Ads", "Native Revenue: $revenue $currency")
+
+                            sendRevenueToFirebase(revenue, currency)
+                        }
                     }
 
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
@@ -272,5 +284,18 @@ class FirstMainApplication : MultiDexApplication(), Application.ActivityLifecycl
 
 
 
+    }
+
+    fun sendRevenueToFirebase(value: Double, currency: String) {
+        val bundle = Bundle().apply {
+            putDouble("value", value)
+            putString("currency", currency)
+            putString("ad_platform", "admob")
+            putString("ad_source", "admob")
+            putString("ad_format", "native") // IMPORTANT
+        }
+
+        FirebaseAnalytics.getInstance(this)
+            .logEvent("ad_impression", bundle)
     }
 }

@@ -20,7 +20,10 @@ import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdValue;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnPaidEventListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.databinding.ActivityCharacterSelectBinding;
@@ -111,6 +114,19 @@ public class CharSelection extends BaseActivity {
         MobileAds.initialize(this);
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.nativead))
                 .forNativeAd(nativeAd -> {
+
+                    nativeAd.setOnPaidEventListener(new OnPaidEventListener() {
+                        @Override
+                        public void onPaidEvent(AdValue adValue) {
+
+                            double revenue = adValue.getValueMicros() / 1000000.0;
+                            String currency = adValue.getCurrencyCode();
+
+                            Log.d("Ads", "Native Revenue: " + revenue + " " + currency);
+
+                            sendRevenueToFirebase(revenue, currency);
+                        }
+                    });
                     NativeTemplateStyle styles =
                             new NativeTemplateStyle.Builder().build();
                     template.setVisibility(VISIBLE);
@@ -119,5 +135,18 @@ public class CharSelection extends BaseActivity {
                 }).build();
 
         adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
+    public void sendRevenueToFirebase(double value, String currency) {
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("value", value);
+        bundle.putString("currency", currency);
+        bundle.putString("ad_platform", "admob");
+        bundle.putString("ad_source", "admob");
+        bundle.putString("ad_format", "native"); // IMPORTANT
+
+        FirebaseAnalytics.getInstance(this)
+                .logEvent("ad_impression", bundle);
     }
 }

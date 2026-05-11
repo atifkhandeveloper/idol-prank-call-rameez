@@ -67,4 +67,17 @@ public class SplashShow extends BaseActivity {
 
         }, 3000);
     }
+
+    public void sendRevenueToFirebase(double value, String currency) {
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("value", value);
+        bundle.putString("currency", currency);
+        bundle.putString("ad_platform", "admob");
+        bundle.putString("ad_source", "admob");
+        bundle.putString("ad_format", "native"); // IMPORTANT
+
+        FirebaseAnalytics.getInstance(this)
+                .logEvent("ad_impression", bundle);
+    }
 }

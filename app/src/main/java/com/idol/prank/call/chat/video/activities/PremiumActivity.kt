@@ -71,7 +71,11 @@ class PremiumActivity : BaseActivity() {
 
     // ---------------- INIT ----------------
     private fun initViews() {
+
         binding.btnClose.visibility = View.INVISIBLE
+        binding.btnWeekly.text = "Loading Prices"
+        binding.btnYearly.text = "Loading Prices"
+        binding.lifeTime.text = "Loading Prices"
     }
 
     private fun showCloseButtonAfterDelay() {
@@ -111,18 +115,48 @@ class PremiumActivity : BaseActivity() {
     }
 
     private fun formatPlan(id: String): String {
+
         val plan = plans.find { it.id == id } ?: return "Loading..."
 
+        val duration = when (id) {
+            "weekly_idol_call" -> "/week"
+            "monthly_idol_call" -> "/month"
+            "yearly_idol_call" -> "/year"
+            else -> ""
+        }
+
         return buildString {
+
             append(plan.title)
             append("\n")
             append(plan.price)
+            append(duration)
 
             if (plan.isBestValue) {
                 append(" ⭐ BEST VALUE")
             }
         }
     }
+
+//    private fun formatPlan(id: String): String {
+//
+//        val plan = plans.find { it.id == id } ?: return "Loading..."
+//
+//        val cleanPrice = plan.price
+//            .replace("per week", "")
+//            .replace("per month", "")
+//            .replace("per year", "")
+//            .trim()
+//
+//        val duration = when (id) {
+//            "weekly_idol_call" -> "/week"
+//            "monthly_idol_call" -> "/month"
+//            "yearly_idol_call" -> "/year"
+//            else -> ""
+//        }
+//
+//        return "$cleanPrice$duration"
+//    }
 
     // ---------------- CLICKS ----------------
     private fun setupClicks() {

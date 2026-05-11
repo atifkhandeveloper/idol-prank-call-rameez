@@ -126,7 +126,7 @@
                         android:background="@drawable/bg_trial_badge"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="4dp"
-                        android:text="3 DAYS FREE"
+                        android:text="3 DAYS FREE Trail"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"

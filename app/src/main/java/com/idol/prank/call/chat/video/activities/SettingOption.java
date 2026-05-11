@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +27,11 @@ import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdValue;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
 
@@ -257,6 +261,19 @@ public class SettingOption extends BaseActivity {
                 .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
                     @Override
                     public void onNativeAdLoaded(NativeAd nativeAd) {
+
+                        nativeAd.setOnPaidEventListener(new OnPaidEventListener() {
+                            @Override
+                            public void onPaidEvent(AdValue adValue) {
+
+                                double revenue = adValue.getValueMicros() / 1000000.0;
+                                String currency = adValue.getCurrencyCode();
+
+                                Log.d("Ads", "Native Revenue: " + revenue + " " + currency);
+
+                                sendRevenueToFirebase(revenue, currency);
+                            }
+                        });
                         NativeTemplateStyle styles = new
                                 NativeTemplateStyle.Builder().build();
                         TemplateView template = findViewById(R.id.my_template);
@@ -269,6 +286,17 @@ public class SettingOption extends BaseActivity {
 
         adLoader.loadAd(new AdRequest.Builder().build());
     }
+    public void sendRevenueToFirebase(double value, String currency) {
 
+        Bundle bundle = new Bundle();
+        bundle.putDouble("value", value);
+        bundle.putString("currency", currency);
+        bundle.putString("ad_platform", "admob");
+        bundle.putString("ad_source", "admob");
+        bundle.putString("ad_format", "native"); // IMPORTANT
+
+        FirebaseAnalytics.getInstance(this)
+                .logEvent("ad_impression", bundle);
+    }
 
 }

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.idol.prank.call.chat.video.AdsModule.Constants;
 import com.idol.prank.call.chat.video.AdsModule.TinyDBs;
 import com.idol.prank.call.chat.video.BaseActivity;
@@ -343,5 +344,16 @@ public class SelectVideoCall<Int> extends BaseActivity {
             startActivity(new Intent(SelectVideoCall.this , Home.class));
 
     }
+    public void sendRevenueToFirebase(double value, String currency) {
 
+        Bundle bundle = new Bundle();
+        bundle.putDouble("value", value);
+        bundle.putString("currency", currency);
+        bundle.putString("ad_platform", "admob");
+        bundle.putString("ad_source", "admob");
+        bundle.putString("ad_format", "native"); // IMPORTANT
+
+        FirebaseAnalytics.getInstance(this)
+                .logEvent("ad_impression", bundle);
+    }
 }

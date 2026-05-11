@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -19,6 +20,7 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.nativead.NativeAd
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.idol.prank.call.chat.video.BaseActivity
 import com.idol.prank.call.chat.video.R
 import com.idol.prank.call.chat.video.adapter.FirstViewPagerAdapter
@@ -154,6 +156,15 @@ class Privacy : BaseActivity() {
 // Create the ad loader
         val adLoader = AdLoader.Builder(this, resources.getString(R.string.nativead))
             .forNativeAd { nativeAd: NativeAd ->
+
+                nativeAd.setOnPaidEventListener { adValue ->
+                    val revenue = adValue.valueMicros / 1_000_000.0
+                    val currency = adValue.currencyCode
+
+                    Log.d("Ads", "Native Revenue: $revenue $currency")
+
+                    sendRevenueToFirebase(revenue, currency)
+                }
                 // Create template style
                 val styles = NativeTemplateStyle.Builder()
                     .build()
@@ -168,6 +179,20 @@ class Privacy : BaseActivity() {
 
 // Load the ad
         adLoader.loadAd(AdRequest.Builder().build())
+    }
+
+
+    fun sendRevenueToFirebase(value: Double, currency: String) {
+        val bundle = Bundle().apply {
+            putDouble("value", value)
+            putString("currency", currency)
+            putString("ad_platform", "admob")
+            putString("ad_source", "admob")
+            putString("ad_format", "native") // IMPORTANT
+        }
+
+        FirebaseAnalytics.getInstance(this)
+            .logEvent("ad_impression", bundle)
     }
 
 

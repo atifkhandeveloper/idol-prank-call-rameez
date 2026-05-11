@@ -25,6 +25,7 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.idol.prank.call.chat.video.BaseActivity;
 import com.idol.prank.call.chat.video.R;
 import com.idol.prank.call.chat.video.databinding.ActivityCharacterSelectBinding;
@@ -240,5 +241,17 @@ public class CombineMakeCallActivity extends BaseActivity {
     public void onBackPressed() {
         startActivity(new Intent(this, CharSelection.class));
         finish();
+    }
+    public void sendRevenueToFirebase(double value, String currency) {
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("value", value);
+        bundle.putString("currency", currency);
+        bundle.putString("ad_platform", "admob");
+        bundle.putString("ad_source", "admob");
+        bundle.putString("ad_format", "native"); // IMPORTANT
+
+        FirebaseAnalytics.getInstance(this)
+                .logEvent("ad_impression", bundle);
     }
 }
